@@ -1,0 +1,25 @@
+操作系统探查
+此模块暂时放在PREROUTING链上，优先级在会话后、dnat前，根据入接口查找到域，判断报文是否为tcp报文，如果是则取出tcp的头，分别判断syn-fin、fin-no-ack、tcp-no-ack三个功能是否开启，分别进入判断，返回值是NF_ACCEPT或NF_DROP。zone结构体里的syn-fin、fin-no-ack、tcp-no-ack分别是u8类型的，如果功能开启，则为1，如果没开启，则为0.
+
+
+
+设置SYN和FIN标志
+
+在syn和fin标志位检查模块，根据入接口查找所在域，判断此域的syn-fin检查是否开启，如果没有开启，则返回accept，如果开启了，判断报文的tcp头里的syn和fin位是否同时开启，如果同时开启，则返回丢包。
+
+
+CLI
+	set zone zone_name screen syn-fin
+
+没有ACK标志的FI的标志
+在此模块，根据入接口查找所在域，判断此域的fin-no-ack功能是否开启，如果没有开启，则返回accept，如果开启了，判断报文的tcp头里的syn和fin位是否同时开启，如果设置了fin位，而没有设置ack位，则返丢包。
+
+CLI
+	set zone zone_name screen fin-no-ack
+
+
+未设置任何标志的TCP包头
+在此模块，根据入接口查找到所在域，判断此域的tcp-no-flag功能是否开启，如果没有开启，则返回accept，如果开启了，则判断报文的tcp头里是否没设置任何标记位，如果没设置，返回丢包。
+
+CLI
+	set zone zone_name screen tcp-no-ack
