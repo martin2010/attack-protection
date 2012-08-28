@@ -1,5 +1,0 @@
-0x434e9620	zone_put	/home/sid/project/zone/zone	EXPORT_SYMBOL
-0x4696d578	zone_get_by_name	/home/sid/project/zone/zone	EXPORT_SYMBOL
-0x069c4785	zone_get_priority	/home/sid/project/zone/zone	EXPORT_SYMBOL
-0xdec9347f	zone_match	/home/sid/project/zone/zone	EXPORT_SYMBOL
-0x5fe54a59	zone_get_by_policy	/home/sid/project/zone/zone	EXPORT_SYMBOL
