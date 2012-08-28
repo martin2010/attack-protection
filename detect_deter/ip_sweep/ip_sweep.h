@@ -11,7 +11,7 @@
 #define IP_SWEEP_SO_GET_MAX			IP_SWEEP_SO_GET_THRESHOLD
 
 
-#define IP_SWEEP_NUM  				10	// 时间间隔内访问不同ip的个数 
+#define IP_SWEEP_NUM  				10
 
 struct st_cmd_ip_sweep
 {

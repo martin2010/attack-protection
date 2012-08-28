@@ -17,7 +17,7 @@
 DEFINE_RWLOCK(ip_sweep_rwlock);
 
 
-s32 ip_sweep_default_threshold = 5;			//毫秒
+s32 ip_sweep_default_threshold = 5;
 
 
 #ifdef IP_SWEEP_DEBUG 
@@ -130,11 +130,9 @@ static u32 ip_sweep_hook(u32 hook,
 	 s32 (*okfn)(struct sk_buff *))
 {
 	const struct iphdr *ipinfo = ip_hdr(skb);
-	// 网络设备结构新加入域的指针
 	struct if_zone *zone;
 	zone = in->zone;
 
-	// 此域ip地址扫描没开启
 	if (zone->ip_sweep == NULL)
 		return NF_ACCEPT;
 

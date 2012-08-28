@@ -11,13 +11,13 @@
 
 #include "os_sniffer.h"
 
-#define OS_SNIFFER_DEBUG			1
+#define OS_SNIFFER_DEBUG		1
 #define OS_SNIFFER_DEBUG_W		1
 
 DEFINE_RWLOCK(os_sniffer_rwlock);
 
 
-s32 os_sniffer_default_threshold = 5;			//毫秒
+s32 os_sniffer_default_threshold = 5;
 
 
 #ifdef OS_SNIFFER_DEBUG 
@@ -63,7 +63,6 @@ os_sniffer_hook(u32 hook,
 	if (ipinfo->protocol != IPPROTO_TCP)
 		return NF_ACCEPT;
 
-	//此域syn-fin选项开启
 	if (zone->syn_fin == true)
 	{
 		if(os_sniffer_syn_fin(tcpinfo) == true)
@@ -73,7 +72,6 @@ os_sniffer_hook(u32 hook,
 		}
 	}
 
-	//此域fin-no-ack选项开启	
 	if (zone->fin_no_ack == true)
 	{
 		if (os_sniffer_fin_no_ack(tcpinfo) == true)
@@ -83,7 +81,6 @@ os_sniffer_hook(u32 hook,
 		}
 	}
 
-	//此域tcp-no-flag选项开启
 	if (zone->tcp_no_flag == true)
 	{
 		if (os_sniffer_tcp_no_flag(tcpinfo) == true)
