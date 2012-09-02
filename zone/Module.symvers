@@ -1,5 +1,0 @@
-0x170ddab2	zone_put	/home/sid/code/test/attack_protection/attack-protection/zone/zone	EXPORT_SYMBOL
-0x8b3d39c0	zone_get_by_name	/home/sid/code/test/attack_protection/attack-protection/zone/zone	EXPORT_SYMBOL
-0x069c4785	zone_get_priority	/home/sid/code/test/attack_protection/attack-protection/zone/zone	EXPORT_SYMBOL
-0xe44af3fd	zone_match	/home/sid/code/test/attack_protection/attack-protection/zone/zone	EXPORT_SYMBOL
-0x8064d66e	zone_get_by_policy	/home/sid/code/test/attack_protection/attack-protection/zone/zone	EXPORT_SYMBOL
