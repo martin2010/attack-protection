@@ -1,0 +1,1 @@
+cmd_/home/sid/code/test/attack_protection/attack-protection/zone/zone.ko := ld -r -m elf_i386  --build-id -o /home/sid/code/test/attack_protection/attack-protection/zone/zone.ko /home/sid/code/test/attack_protection/attack-protection/zone/zone.o /home/sid/code/test/attack_protection/attack-protection/zone/zone.mod.o

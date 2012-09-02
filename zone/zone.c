@@ -9,18 +9,24 @@
 static struct list_head zone_head;
 static DEFINE_RWLOCK(zone_rwlock);
 
-#define ZONE_DEBUG  	1
-#define ZONE_DEBUG_W  	1
+#define ZONE_DEBUG  		1
+#define ZONE_DEBUG_CONFIG  	1
+#define ZONE_DEBUG_MATCH  	1
 
 #ifdef ZONE_DEBUG
 #define dprintk(x...) printk(x)
 #else
 #define dprintk(x...)
 #endif
-#ifdef ZONE_DEBUG_W
-#define dwprintk(x...) printk(x)
+#ifdef ZONE_DEBUG_CONFIG
+#define dcprintk(x...) printk(x)
 #else
-#define dwprintk(x...)
+#define dcprintk(x...)
+#endif
+#ifdef ZONE_DEBUG_MATCH
+#define dmprintk(x...) printk(x)
+#else
+#define dmprintk(x...)
 #endif
 
 
@@ -76,7 +82,7 @@ inline bool zone_match(struct if_zone *zone, const s8 *if_name)
 {
 	s32 i;
 
-	dwprintk("if_name=%s\n", if_name);
+	dmprintk("if_name=%s\n", if_name);
 
 	read_lock_bh(&zone_rwlock);
 	for(i = 0; i < zone->sec_zone.if_num; i++)
@@ -129,15 +135,15 @@ static void zone_printk(struct if_zone *zone)
                 return;
         }
 
-	dwprintk("name: %-10s use: %-4d  pri: %-8d", sec_zone->name, zone->use.counter, sec_zone->pri);
+	dcprintk("name: %-10s use: %-4d  pri: %-8d", sec_zone->name, zone->use.counter, sec_zone->pri);
 	
-	dwprintk("interface:");
+	dcprintk("interface:");
 	for(i = 0; i < sec_zone->if_num; i++)
 	{
-		dwprintk("%-8s", sec_zone->if_name[i]);
+		dcprintk("%-8s", sec_zone->if_name[i]);
 	}
 
-	dwprintk("\n");
+	dcprintk("\n");
 }
 
 /*
@@ -226,7 +232,7 @@ static s32 if_set_zone(void __user *user, s32 len)
 	if (dev == NULL)
 	{
 		zone_put(zone);
-		printk("%s: netdevice %s is not eiestent!\n", __func__, if_zone.if_name);
+		printk("%s: netdevice %s is not existent!\n", __func__, if_zone.if_name);
 		return -EFAULT;
 	}
 
@@ -280,7 +286,7 @@ static s32 zone_add(void __user *user, s32 len)
 	atomic_set(&new_zone->use, 1);
 	list_add_tail(&(new_zone->list), &zone_head);
 	write_unlock_bh(&zone_rwlock);
-	dwprintk("add zone: %s seccuss! \n", new_zone->sec_zone.name);
+	dcprintk("add zone: %s seccuss! \n", new_zone->sec_zone.name);
 	return 0;
 }
 
@@ -328,6 +334,7 @@ static s32 zone_del(void __user *user, s32 len)
 	zone_put(zone);//zone_get_by_name put 1
 	__zone_del(zone);
 	
+	dcprintk("del zone: %s seccuss! \n", sec_zone.name);
 	return 0;
 }
 
@@ -362,6 +369,7 @@ static s32 zone_mod(void __user *user, s32 len)
 
 	zone_put(zone);
 
+	dcprintk("modify zone: %s seccuss! \n", sec_zone.name);
 	return 0;
 }
 
@@ -613,7 +621,7 @@ s32 __init zone_init(void)
 
 void __exit zone_exit(void)
 {
-	printk("%s: zone module exit...\n", __func__);
+	dprintk("%s: zone module exit...\n", __func__);
 
 	nf_unregister_sockopt(&zone_sockopts);
 	
